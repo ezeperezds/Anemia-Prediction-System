@@ -44,6 +44,7 @@ def show_thresholds(y_proba_min, y_proba_max, y_proba, y_true):
             'accuracy': accuracy_score(y_true, y_pred),
             'precision': precision_score(y_true, y_pred),
             'recall': recall_score(y_true, y_pred),
+            'f1-score': f1_score(y_true, y_pred),
             'predicted positives': y_pred.sum()
         })
     df_thresholds = pd.DataFrame(rows)
