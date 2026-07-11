@@ -20,19 +20,18 @@ def show_confusion_matrix(y_true, y_pred):
 def show_cv_metrics(model_scores):
     metrics = {
         "accuracy":
-            f'{model_scores["test_accuracy"].mean().round(4)} ± {model_scores['test_accuracy'].std().round(4)}',
+            f'{round(model_scores["test_accuracy"].mean(), 4)} ± {round(model_scores['test_accuracy'].std(), 4)}',
 
         "precision":
-            f'{model_scores["test_precision"].mean().round(4)} ± {model_scores['test_precision'].std().round(4)}',
+            f'{round(model_scores["test_precision"].mean(), 4)} ± {round(model_scores['test_precision'].std(), 4)}',
 
         "recall":
-            f'{model_scores["test_recall"].mean().round(4)} ± {model_scores['test_recall'].std().round(4)}',
+            f'{round(model_scores["test_recall"].mean(), 4)} ± {round(model_scores['test_recall'].std(), 4)}',
 
         "f1":
-            f'{model_scores["test_f1"].mean().round(4)} ± {model_scores['test_f1'].std().round(4)}'
+            f'{round(model_scores["test_f1"].mean(), 4)} ± {round(model_scores['test_f1'].std(), 4)}'
             }
     return metrics
-
 
 def show_thresholds(y_proba_min, y_proba_max, y_proba, y_true):
     thresholds = np.arange(y_proba_min, y_proba_max, 0.01)
