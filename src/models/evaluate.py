@@ -20,16 +20,16 @@ def show_confusion_matrix(y_true, y_pred):
 def show_cv_metrics(model_scores):
     metrics = {
         "accuracy":
-            model_scores["test_accuracy"].mean().round(4),
+            f'{model_scores["test_accuracy"].mean().round(4)} ± {model_scores['test_accuracy'].std().round(4)}',
 
         "precision":
-            model_scores["test_precision"].mean().round(4),
+            f'{model_scores["test_precision"].mean().round(4)} ± {model_scores['test_precision'].std().round(4)}',
 
         "recall":
-            model_scores["test_recall"].mean().round(4),
+            f'{model_scores["test_recall"].mean().round(4)} ± {model_scores['test_recall'].std().round(4)}',
 
         "f1":
-            model_scores["test_f1"].mean().round(4)
+            f'{model_scores["test_f1"].mean().round(4)} ± {model_scores['test_f1'].std().round(4)}'
             }
     return metrics
 
