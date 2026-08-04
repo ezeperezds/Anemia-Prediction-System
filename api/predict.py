@@ -19,7 +19,7 @@ def predict_patient(pipeline: Pipeline, patient: Patient) -> PredictionResponse:
     # Obtain the probability of the positive class (Anemic).
     pred_proba = float(pipeline.predict_proba(patient_df)[0][1])
     
-    probability = (round(pred_proba, 4)*100)
+    probability = round(pred_proba*100, 4)
     
     # Make the diagnosis.
     diagnosis = (Diagnosis.anemic if pred == 1 else Diagnosis.not_anemic)
