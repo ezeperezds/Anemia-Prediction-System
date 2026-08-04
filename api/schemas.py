@@ -2,8 +2,9 @@ from enum import Enum
 from pydantic import BaseModel, Field
 
 class GenderPatient(str, Enum):
-    male = "Male" # se parseara a 0 para realizar la predicción
-    female = "Female" # se parseara a 1 para realizar la predicción
+    """Supported patient genders."""
+    male = "Male"
+    female = "Female"
 
 class Patient(BaseModel):
     Gender: GenderPatient = Field(description='Gender of the patient.',
@@ -39,4 +40,4 @@ class PredictionResponse(BaseModel):
     diagnosis: Diagnosis = Field(description='Human-readable diagnosis corresponding to the predicted class.',
                             examples=['Anemic'])
     probability: float = Field(description='Estimated probability that the patient belongs to the positive class (Anemia).',
-                            examples=[0.87])
+                            examples=[87.69])
