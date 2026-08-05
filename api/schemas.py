@@ -12,23 +12,23 @@ class Patient(BaseModel):
     
     Hemoglobin:  float = Field(description='Hemoglobin concentration in grams per deciliter (g/dL).',
                             examples=[13.9],
-                            gt=4,
-                            lt=20)
+                            ge=4,
+                            le=20)
     
     MCH: float = Field(description='Mean Corpuscular Hemoglobin (MCH) in picograms (pg).',
                             examples=[29.4],
-                            gt=12,
-                            lt=34)
+                            ge=12,
+                            le=34)
     
     MCHC: float = Field(description='Mean Corpuscular Hemoglobin Concentration (MCHC) in grams per deciliter (g/dL).',
                             examples=[33.5],
-                            gt=26,
-                            lt=36)
+                            ge=26,
+                            le=36)
     
     MCV: float = Field(description='Mean Corpuscular Volume (MCV) in femtoliters (fL).',
                             examples=[88.1],
-                            gt=60,
-                            lt=120)
+                            ge=60,
+                            le=120)
 
 class Diagnosis(str, Enum):
     anemic = "Anemic"
@@ -39,5 +39,5 @@ class PredictionResponse(BaseModel):
                             examples=[1])
     diagnosis: Diagnosis = Field(description='Human-readable diagnosis corresponding to the predicted class.',
                             examples=['Anemic'])
-    probability: float = Field(description='Estimated probability that the patient belongs to the positive class (Anemia).',
+    probability: float = Field(description='Estimated probability (percentage) that the patient belongs to the positive class (Anemia).',
                             examples=[87.69])
