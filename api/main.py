@@ -5,6 +5,7 @@ from api.predict import predict_patient
 from api.schemas import PredictionResponse, Patient
 from api.loader import load_pipeline
 
+from api.config import API_TITLE, API_DESCRIPTION, API_VERSION, API_SUMMARY, API_CONTACT
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -13,30 +14,12 @@ async def lifespan(app: FastAPI):
     app.state.pipeline = load_pipeline()
     yield
 
-
-description = """
-This API exposes a trained machine learning pipeline capable of predicting
-anemia from patient hematological measurements.
-
-The inference pipeline automatically performs feature engineering,
-preprocessing, feature selection, and classification before returning
-the prediction.
-
-The API accepts patient hematological measurements as input and returns
-the predicted class, a human-readable diagnosis, and the probability of
-the positive class.
-"""
-
 app = FastAPI(
-    title = 'Anemia Prediction API',
-    description = description,
-    summary = 'Machine Learning API for anemia prediction.',
-    version = '1.0',
-    contact = {
-        'name': 'Ezequiel Alejandro Pérez',
-        'email': 'ezep5993@gmail.com',
-        'url': 'https://github.com/ezeperezds'
-        },
+    title = API_TITLE,
+    description = API_DESCRIPTION,
+    summary = API_SUMMARY,
+    version = API_VERSION,
+    contact = API_CONTACT,
     lifespan=lifespan
 )
 
