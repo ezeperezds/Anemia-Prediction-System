@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from database.config import DATABASE_URL
+from database.config import DATABASE_URL 
 
 engine = create_engine(DATABASE_URL,
                     connect_args={
@@ -12,3 +12,6 @@ SessionLocal = sessionmaker(bind=engine,
                             autocommit=False)
 
 Base = declarative_base()
+
+def create_database():
+    Base.metadata.create_all(bind=engine)

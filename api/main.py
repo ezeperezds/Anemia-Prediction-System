@@ -4,11 +4,16 @@ from contextlib import asynccontextmanager
 from api.predict import predict_patient
 from api.schemas import PredictionResponse, Patient
 from api.loader import load_pipeline
-
 from api.config import API_TITLE, API_DESCRIPTION, API_VERSION, API_SUMMARY, API_CONTACT
+
+from database.database import create_database
+from database import tables
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Create the database
+    create_database()
+    
     # Load the trained pipeline once when the application starts.
     # The same instance will be reused for every prediction request.
     app.state.pipeline = load_pipeline()
