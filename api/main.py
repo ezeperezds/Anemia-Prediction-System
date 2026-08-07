@@ -1,14 +1,20 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from contextlib import asynccontextmanager
 
 from api.predict import predict_patient
-from api.schemas import PredictionResponse, Patient
+from api.schemas import PredictionResponse, Patient, PredictionRecord, PredictionStats
 from api.loader import load_pipeline
-
 from api.config import API_TITLE, API_DESCRIPTION, API_VERSION, API_SUMMARY, API_CONTACT
+
+from database.database import create_database
+from database import tables
+from database.crud import save_prediction, get_prediction, get_predictions, count_predictions
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Create the database
+    create_database()
+    
     # Load the trained pipeline once when the application starts.
     # The same instance will be reused for every prediction request.
     app.state.pipeline = load_pipeline()
@@ -39,5 +45,54 @@ def predict_endpoint(patient: Patient, request: Request):
     """
     Predict whether a patient has anemia using the trained pipeline.
     """
-    return predict_patient(patient=patient, 
+    response = predict_patient(patient=patient, 
                         pipeline=request.app.state.pipeline)
+    
+    save_prediction(patient=patient, response=response)
+    
+    return response
+
+@app.get('/predictions/{id}',
+        tags=['Queries'],
+        response_model=PredictionRecord,
+        summary="Get prediction by ID",
+        description="Retrieves a stored prediction by its unique identifier.",
+        response_description="Prediction retrieved successfully."
+        )
+def read_prediction(id: int):
+    """
+    Retrieve a stored prediction by its unique identifier.
+    """
+    prediction = get_prediction(id)
+    
+    if prediction is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Prediction not found."
+        )
+    
+    return PredictionRecord.model_validate(prediction)
+
+@app.get('/predictions',
+        tags=["Queries"],
+        response_model=list[PredictionRecord],
+        summary="Get all predictions.",
+        description="Retrieves all predictions stored in the database.",
+        response_description="List of stored predictions.")
+def read_predictions() -> list[PredictionRecord]:
+    """
+    Retrieve all stored predictions from the database.
+    """
+    predictions = get_predictions()
+    
+    return [PredictionRecord.model_validate(prediction) 
+            for prediction in predictions]
+
+@app.get('/stats',
+        tags=['Queries'],
+        response_model=PredictionStats,
+        summary='',
+        description='',
+        response_description='')
+def read_predictions_stats() -> PredictionStats:
+    return count_predictions()
