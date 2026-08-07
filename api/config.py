@@ -20,6 +20,11 @@ the prediction.
 The API accepts patient hematological measurements as input and returns
 the predicted class, a human-readable diagnosis, and the probability of
 the positive class.
+
+**Disclaimer:** This project was developed for educational purposes as
+part of a Data Science portfolio. It is not a certified medical device
+and must not be used for real clinical decision-making without
+supervision from a qualified healthcare professional.
 """
 
 API_VERSION = "1.0"
