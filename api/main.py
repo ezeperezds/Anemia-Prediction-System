@@ -2,13 +2,13 @@ from fastapi import FastAPI, Request, HTTPException
 from contextlib import asynccontextmanager
 
 from api.predict import predict_patient
-from api.schemas import PredictionResponse, Patient, PredictionRecord
+from api.schemas import PredictionResponse, Patient, PredictionRecord, PredictionStats
 from api.loader import load_pipeline
 from api.config import API_TITLE, API_DESCRIPTION, API_VERSION, API_SUMMARY, API_CONTACT
 
 from database.database import create_database
 from database import tables
-from database.crud import save_prediction, get_prediction, get_predictions
+from database.crud import save_prediction, get_prediction, get_predictions, count_predictions
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -88,6 +88,11 @@ def read_predictions() -> list[PredictionRecord]:
     return [PredictionRecord.model_validate(prediction) 
             for prediction in predictions]
 
-@app.get('/predictions/count')
-def count_predictions():
-    pass
+@app.get('/stats',
+        tags=['Queries'],
+        response_model=PredictionStats,
+        summary='',
+        description='',
+        response_description='')
+def read_predictions_stats() -> PredictionStats:
+    return count_predictions()

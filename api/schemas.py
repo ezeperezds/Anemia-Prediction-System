@@ -84,3 +84,11 @@ class PredictionRecord(BaseModel):
     created_at: datetime = Field(description="UTC date and time when the prediction was stored.",
                                 examples=["2026-08-07T14:35:22Z"]
                                 )
+
+class PredictionStats(BaseModel):
+    
+    model_config = ConfigDict(from_attributes=True)
+    
+    total_predictions: int = Field()
+    anemic_predictions: int = Field()
+    non_anemic_predictions: int = Field()

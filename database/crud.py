@@ -1,7 +1,7 @@
 from database.tables import Prediction
 from database.database import SessionLocal
-from api.schemas import Patient, PredictionResponse, GenderPatient, PredictionRecord
-from sqlalchemy import select
+from api.schemas import Patient, PredictionResponse, GenderPatient, PredictionRecord, PredictionStats
+from sqlalchemy import select, func
 
 import logging
 
@@ -65,6 +65,28 @@ def get_predictions() -> list[Prediction]:
         
         predictions = (session.execute(stmt).scalars().all())
         return predictions
+        
+    finally:
+        session.close()
+
+def count_predictions() -> PredictionStats:
+    
+    session = SessionLocal()
+    
+    try:
+        
+        return PredictionStats(
+            total_predictions=session.scalar(
+            select(func.count(Prediction.id))),
+            
+            anemic_predictions=session.scalar(
+            select(func.count(Prediction.id))
+            .where(Prediction.prediction == 1)),
+            
+            non_anemic_predictions=session.scalar(
+                select(func.count(Prediction.id))
+                .where(Prediction.prediction == 0))
+        )
         
     finally:
         session.close()
