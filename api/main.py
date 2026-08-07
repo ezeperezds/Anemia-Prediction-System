@@ -8,6 +8,7 @@ from api.config import API_TITLE, API_DESCRIPTION, API_VERSION, API_SUMMARY, API
 
 from database.database import create_database
 from database import tables
+from database.crud import save_prediction
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -44,5 +45,25 @@ def predict_endpoint(patient: Patient, request: Request):
     """
     Predict whether a patient has anemia using the trained pipeline.
     """
-    return predict_patient(patient=patient, 
+    response = predict_patient(patient=patient, 
                         pipeline=request.app.state.pipeline)
+    
+    save_prediction(patient=patient, response=response)
+    
+    return response
+
+@app.get('/')
+def get_patient():
+    pass
+
+@app.get('/')
+def get_patients():
+    pass
+
+@app.delete('/')
+def delete_patient():
+    pass
+
+@app.patch('/')
+def update_patient():
+    pass
