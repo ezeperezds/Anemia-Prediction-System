@@ -91,8 +91,8 @@ def read_predictions() -> list[PredictionRecord]:
 @app.get('/stats',
         tags=['Queries'],
         response_model=PredictionStats,
-        summary='',
-        description='',
-        response_description='')
+        summary="Get prediction statistics",
+        description="Retrieves aggregated statistics about all stored predictions, including the total number of predictions and the counts of anemic and non-anemic diagnoses.",
+        response_description="Prediction statistics retrieved successfully.")
 def read_predictions_stats() -> PredictionStats:
     return count_predictions()
