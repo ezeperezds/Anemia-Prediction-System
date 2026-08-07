@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Caches de tests/tipado
+.pytest_cache/
+.mypy_cache/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Variables de entorno / secretos
+.env
+
+# IDEs
+.vscode/
+.idea/
