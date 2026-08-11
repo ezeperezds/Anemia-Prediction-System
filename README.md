@@ -231,6 +231,15 @@ Feature Engineering, model comparison, Feature Importance analysis, and SHAP exp
 
 ---
 
+## Future Improvements
+
+- **Dockerization:** Containerize the FastAPI application and its dependencies using Docker to provide a reproducible and isolated runtime environment and simplify deployment.
+- **Automated testing:** Expand unit and integration test coverage for the inference pipeline, API endpoints, database operations, and input validation.
+- **Model monitoring and external validation:** Implement monitoring for data drift and prediction behavior, and evaluate the model on independent datasets before considering any real-world clinical application.
+
+
+---
+
 # Author
 
 **Ezequiel Alejandro Pérez**
